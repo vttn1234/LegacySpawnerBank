@@ -1,0 +1,41 @@
+
+payout-interval-seconds: 15
+spawner-attribution-radius: 8
+
+spawners:
+  PIG:
+    shop-price: 25000
+    payout-min: 50
+    payout-max: 150
+  COW:
+    shop-price: 50000
+    payout-min: 100
+    payout-max: 300
+  ZOMBIE:
+    shop-price: 75000
+    payout-min: 150
+    payout-max: 450
+  SPIDER:
+    shop-price: 90000
+    payout-min: 175
+    payout-max: 525
+  SKELETON:
+    shop-price: 100000
+    payout-min: 200
+    payout-max: 600
+  CREEPER:
+    shop-price: 250000
+    payout-min: 225
+    payout-max: 675
+  ENDERMAN:
+    shop-price: 300000
+    payout-min: 250
+    payout-max: 750
+  BLAZE:
+    shop-price: 350000
+    payout-min: 300
+    payout-max: 900
+  IRON_GOLEM:
+    shop-price: 1000000
+    payout-min: 500
+    payout-max: 1500
