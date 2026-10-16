@@ -3,7 +3,7 @@ name: LegacySpawnerBank
 version: 1.0.0
 main: com.legacysmp.spawnerbank.LegacySpawnerBank
 api-version: '1.21'
-softdepend:
+depend:
   - Vault
   - WildStacker
 
