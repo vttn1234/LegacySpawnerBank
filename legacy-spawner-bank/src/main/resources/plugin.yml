@@ -1,0 +1,13 @@
+name: LegacySpawnerBank
+version: 0.1.0
+main: com.legacysmp.spawnerbank.LegacySpawnerBank
+api-version: '1.21'
+softdepend: [Vault, WildStacker]
+commands:
+  spawnerbank:
+    description: Spawner bank administration
+    usage: /spawnerbank reload
+    permission: spawnerbank.admin
+permissions:
+  spawnerbank.admin:
+    default: op

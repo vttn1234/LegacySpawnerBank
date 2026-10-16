@@ -1,0 +1,12 @@
+# MVP defaults. Payout keys map to Bukkit spawner block materials.
+# Income is generated every 15 seconds for each loaded, configured spawner block.
+payouts:
+  PIG: {min: 50, max: 150}
+  COW: {min: 100, max: 300}
+  ZOMBIE: {min: 150, max: 450}
+  SPIDER: {min: 175, max: 525}
+  SKELETON: {min: 200, max: 600}
+  CREEPER: {min: 225, max: 675}
+  ENDERMAN: {min: 250, max: 750}
+  BLAZE: {min: 300, max: 900}
+  IRON_GOLEM: {min: 500, max: 1500}
