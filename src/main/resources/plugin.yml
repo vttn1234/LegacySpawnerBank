@@ -1,17 +1,13 @@
 
-name: LegacySpawnerBankTest
-version: 0.1.0
-main: com.legacysmp.spawnerbank.LegacySpawnerBankTest
+name: LegacySpawnerBank
+version: 1.0.0
+main: com.legacysmp.spawnerbank.LegacySpawnerBank
 api-version: '1.21'
-softdepend: [WildStacker]
+softdepend:
+  - Vault
+  - WildStacker
 
 commands:
   lsbdebug:
-    description: Diagnostic test for WildStacker spawner counts.
+    description: Checks whether LegacySpawnerBank is running
     usage: /lsbdebug
-    permission: legacybank.admin
-
-permissions:
-  legacybank.admin:
-    description: Allows use of the Legacy Spawner Bank diagnostic command.
-    default: op
