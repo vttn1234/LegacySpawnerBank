@@ -154,29 +154,40 @@ public final class LegacySpawnerBank extends JavaPlugin implements Listener {
         }
     }
 
-    private void openDropMenu(Player player, String id) {
-        Inventory inventory = Bukkit.createInventory(null, 54, DROP_TITLE);
-        ConfigurationSection section =
-                data.getConfigurationSection(id + ".items");
+    
+private void openDropMenu(Player player, String id) {
+    Inventory inventory = Bukkit.createInventory(
+        null, 54, DROP_TITLE
+    );
 
-        if (section != null) {
-            for (String slotText : section.getKeys(false)) {
-                try {
-                    int slot = Integer.parseInt(slotText);
-                    ItemStack item = section.getItemStack(slotText);
-                    if (slot >= 0 && slot < inventory.getSize()
-                            && item != null) {
+    ConfigurationSection itemsSection =
+        data.getConfigurationSection(id + ".items");
+
+    if (itemsSection != null) {
+        for (String key : itemsSection.getKeys(false)) {
+            try {
+                int slot = Integer.parseInt(key);
+
+                if (slot >= 0 && slot < inventory.getSize()) {
+                    ItemStack item = itemsSection.getItemStack(key);
+
+                    if (item != null && item.getType() != Material.AIR) {
                         inventory.setItem(slot, item);
                     }
-                } catch (NumberFormatException ignored) {
-                    // Ignore invalid saved slots.
                 }
+            } catch (NumberFormatException ignored) {
+                getLogger().warning(
+                    "Invalid saved item slot: " + key
+                );
             }
         }
-
-        openDropMenus.put(player.getUniqueId(), id);
-        player.openInventory(inventory);
     }
+
+    // Open first so the main menu's close event cannot erase this mapping.
+    player.openInventory(inventory);
+    openDropMenus.put(player.getUniqueId(), id);
+}
+
 
     @EventHandler
     public void onDropMenuClose(InventoryCloseEvent event) {
