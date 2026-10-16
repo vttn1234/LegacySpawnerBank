@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,10 +25,14 @@ public final class LegacySpawnerBank extends JavaPlugin implements Listener {
 
     private Economy economy;
 
+    private static final String MENU_TITLE =
+            ChatColor.DARK_GREEN + "Spawner Bank";
+
     @Override
     public void onEnable() {
         RegisteredServiceProvider<Economy> provider =
-                getServer().getServicesManager().getRegistration(Economy.class);
+                getServer().getServicesManager()
+                        .getRegistration(Economy.class);
 
         if (provider != null) {
             economy = provider.getProvider();
@@ -34,7 +40,12 @@ public final class LegacySpawnerBank extends JavaPlugin implements Listener {
 
         saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(this, this);
+
         getLogger().info("LegacySpawnerBank enabled.");
+
+        if (economy == null) {
+            getLogger().warning("Vault economy provider not found.");
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -44,32 +55,54 @@ public final class LegacySpawnerBank extends JavaPlugin implements Listener {
             return;
         }
 
-        if (!(event.getClickedBlock().getState() instanceof CreatureSpawner spawner)) {
+        if (!(event.getClickedBlock().getState()
+                instanceof CreatureSpawner spawner)) {
             return;
         }
 
         event.setCancelled(true);
+
         Player player = event.getPlayer();
 
         Inventory menu = Bukkit.createInventory(
-                null, 27, ChatColor.DARK_GREEN + "Spawner Bank");
+                null, 27, MENU_TITLE);
 
-        menu.setItem(4, item(Material.SPAWNER,
-                ChatColor.WHITE + spawner.getSpawnedType().name() + " Spawner"));
+        menu.setItem(4, item(
+                Material.SPAWNER,
+                ChatColor.WHITE + spawner.getSpawnedType().name()
+                        + " Spawner"));
 
-        menu.setItem(10, item(Material.CHEST,
+        menu.setItem(10, item(
+                Material.CHEST,
                 ChatColor.GOLD + "Mob Drops"));
 
-        menu.setItem(12, item(Material.GOLD_INGOT,
+        menu.setItem(12, item(
+                Material.GOLD_INGOT,
                 ChatColor.YELLOW + "Stored Money"));
 
-        menu.setItem(14, item(Material.EXPERIENCE_BOTTLE,
+        menu.setItem(14, item(
+                Material.EXPERIENCE_BOTTLE,
                 ChatColor.GREEN + "Stored XP"));
 
-        menu.setItem(16, item(Material.EMERALD,
+        menu.setItem(16, item(
+                Material.EMERALD,
                 ChatColor.AQUA + "Selling"));
 
         player.openInventory(menu);
+    }
+
+    @EventHandler
+    public void onMenuClick(InventoryClickEvent event) {
+        if (event.getView().getTitle().equals(MENU_TITLE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onMenuDrag(InventoryDragEvent event) {
+        if (event.getView().getTitle().equals(MENU_TITLE)) {
+            event.setCancelled(true);
+        }
     }
 
     private ItemStack item(Material material, String name) {
@@ -80,6 +113,7 @@ public final class LegacySpawnerBank extends JavaPlugin implements Listener {
             meta.setDisplayName(name);
             meta.setLore(Collections.singletonList(
                     ChatColor.GRAY + "Spawner Bank"));
+
             stack.setItemMeta(meta);
         }
 
