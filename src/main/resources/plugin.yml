@@ -1,0 +1,14 @@
+name: LegacySpawnerBankTest
+version: 0.1.0
+main: com.legacysmp.spawnerbank.LegacySpawnerBankTest
+api-version: '1.21'
+softdepend: [WildStacker]
+commands:
+  bankstackcheck:
+    description: Reads the WildStacker count of the spawner you are looking at.
+    usage: /bankstackcheck
+    permission: legacybank.admin
+permissions:
+  legacybank.admin:
+    description: Allows use of the Legacy Spawner Bank test command.
+    default: op
